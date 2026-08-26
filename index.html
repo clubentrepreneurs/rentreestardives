@@ -1,1 +1,1048 @@
+<!DOCTYPE html>
+<html lang="fr" class="h-full scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rentrée Express - Université Côte d'Azur</title>
 
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Apex New Font import & fallback -->
+    <style>
+        @import url('https://fonts.cdnfonts.com/css/apex-new');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+        :root {
+            --brand-black: #000000;
+            --brand-white: #FFFFFF;
+            --brand-cyan: #00AFD7;
+            --brand-cyan-dark: #007EA1;
+            --brand-pink: #E5005B;
+        }
+
+        body {
+            font-family: 'Apex New', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+            background-color: #F8FAFC;
+            color: #0F172A;
+        }
+
+        .bg-cyan-brand { background-color: var(--brand-cyan); }
+        .bg-cyan-dark-brand { background-color: var(--brand-cyan-dark); }
+        .bg-pink-brand { background-color: var(--brand-pink); }
+
+        .text-cyan-brand { color: var(--brand-cyan); }
+        .text-cyan-dark-brand { color: var(--brand-cyan-dark); }
+        .text-pink-brand { color: var(--brand-pink); }
+
+        .border-cyan-brand { border-color: var(--brand-cyan); }
+        .border-pink-brand { border-color: var(--brand-pink); }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F1F5F9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #CBD5E1;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--brand-cyan-dark);
+        }
+
+        /* Glassmorphism effects */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+
+        .tab-btn.active {
+            background-color: var(--brand-cyan-dark);
+            color: #ffffff !important;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0, 126, 161, 0.25);
+        }
+
+        /* Accordion transition */
+        .accordion-content {
+            transition: max-height 0.35s ease-in-out, opacity 0.3s ease-in-out, padding 0.3s ease;
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+        }
+
+        .accordion-content.open {
+            max-height: 500px;
+            opacity: 1;
+        }
+
+        /* Pulsing map pins */
+        .map-pin {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .map-pin:hover {
+            transform: scale(1.25) translateY(-4px);
+            z-index: 30;
+        }
+    </style>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            black: '#000000',
+                            white: '#FFFFFF',
+                            cyan: '#00AFD7',
+                            cyanDark: '#007EA1',
+                            pink: '#E5005B',
+                            grayBg: '#F4F6F8'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="min-h-full flex flex-col justify-between selection:bg-[#00AFD7] selection:text-white">
+    <!-- HEADER / NAVIGATION -->
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo & Site Name -->
+                <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('accueil')">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#007EA1] to-[#00AFD7] flex items-center justify-center text-white font-bold text-xl shadow-md">
+                        RE
+                    </div>
+                    <div>
+                        <span class="text-xl font-bold tracking-tight text-slate-900 block leading-tight">Rentrée express</span>
+                        <span class="text-xs text-slate-500 font-medium">Université Côte d'Azur</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden md:flex items-center space-x-1 lg:space-x-2">
+                    <button onclick="switchTab('accueil')" id="nav-accueil" class="tab-btn active px-4 py-2.5 rounded-full text-sm font-medium text-slate-700 hover:text-[#007EA1] transition-all">
+                        Accueil
+                    </button>
+                    <button onclick="switchTab('ressources')" id="nav-ressources" class="tab-btn px-4 py-2.5 rounded-full text-sm font-medium text-slate-700 hover:text-[#007EA1] transition-all">
+                        Ressources
+                    </button>
+                    <button onclick="switchTab('campus')" id="nav-campus" class="tab-btn px-4 py-2.5 rounded-full text-sm font-medium text-slate-700 hover:text-[#007EA1] transition-all">
+                        Campus & Emploi de temps
+                    </button>
+                    <button onclick="switchTab('passeport')" id="nav-passeport" class="tab-btn px-4 py-2.5 rounded-full text-sm font-medium text-slate-700 hover:text-[#007EA1] transition-all">
+                        Passeport
+                    </button>
+                    <button onclick="switchTab('aides')" id="nav-aides" class="tab-btn px-4 py-2.5 rounded-full text-sm font-medium text-slate-700 hover:text-[#007EA1] transition-all">
+                        Aides et contacts
+                    </button>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Drawer Navigation -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-slate-200 px-4 pt-2 pb-6 space-y-2">
+            <button onclick="switchTab('accueil'); toggleMobileMenu();" class="w-full text-left px-4 py-3 rounded-xl font-medium text-slate-800 hover:bg-slate-100">Accueil</button>
+            <button onclick="switchTab('ressources'); toggleMobileMenu();" class="w-full text-left px-4 py-3 rounded-xl font-medium text-slate-800 hover:bg-slate-100">Ressources</button>
+            <button onclick="switchTab('campus'); toggleMobileMenu();" class="w-full text-left px-4 py-3 rounded-xl font-medium text-slate-800 hover:bg-slate-100">Campus & Emploi de temps</button>
+            <button onclick="switchTab('passeport'); toggleMobileMenu();" class="w-full text-left px-4 py-3 rounded-xl font-medium text-slate-800 hover:bg-slate-100">Passeport</button>
+            <button onclick="switchTab('aides'); toggleMobileMenu();" class="w-full text-left px-4 py-3 rounded-xl font-medium text-slate-800 hover:bg-slate-100">Aides et contacts</button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- ================= PAGE 1: ACCUEIL ================= -->
+        <section id="page-accueil" class="tab-page space-y-12">
+            <!-- Hero Section -->
+            <div class="bg-gradient-to-br from-slate-900 via-[#003B52] to-[#007EA1] rounded-3xl p-8 lg:p-12 text-white shadow-xl relative overflow-hidden flex flex-col lg:flex-row items-center gap-8">
+                <!-- Decorative Circle -->
+                <div class="absolute -right-12 -bottom-12 w-96 h-96 bg-[#00AFD7]/20 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute right-1/3 -top-12 w-64 h-64 bg-[#E5005B]/15 rounded-full blur-2xl pointer-events-none"></div>
+
+                <div class="lg:w-7/12 space-y-6 z-10">
+                    <span class="inline-block px-3.5 py-1.5 rounded-full bg-[#E5005B] text-white text-xs font-semibold tracking-wider uppercase">
+                        Guide de Rentrée tardive
+                    </span>
+                    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight">
+                        Arrivé(e) après la rentrée ?<br>
+                        <span class="text-[#00AFD7]">On t'accueille, même en retard !</span>
+                    </h1>
+                    <p class="text-slate-200 text-base sm:text-lg leading-relaxed max-w-2xl">
+                        Voici vos étapes de rentrée, les dates à retenir, les ressources pour t'y retrouver et les bons contacts quand tu as besoin d'aide.
+                    </p>
+                    <div class="flex flex-wrap gap-4 pt-2">
+                        <button onclick="switchTab('ressources')" class="px-6 py-3.5 rounded-xl bg-[#00AFD7] hover:bg-[#007EA1] text-white font-semibold transition-all shadow-lg shadow-[#00AFD7]/30 flex items-center gap-2">
+                            <span>Voir les ressources</span>
+                            <i class="fa-solid fa-arrow-right text-sm"></i>
+                        </button>
+                        <button onclick="switchTab('aides')" class="px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold border border-white/20 transition-all flex items-center gap-2 backdrop-blur-sm">
+                            <span>J'ai besoin d'aide</span>
+                            <i class="fa-regular fa-circle-question text-sm"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Hero Image Showcase -->
+                <div class="lg:w-5/12 w-full z-10">
+                    <div class="relative mx-auto max-w-md lg:max-w-none rounded-2xl overflow-hidden shadow-2xl border-4 border-white/10 bg-slate-800 group">
+                        <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80"
+                             alt="Étudiants Université Côte d'Azur"
+                             class="w-full h-72 sm:h-80 object-cover group-hover:scale-105 transition-transform duration-500"
+                             onerror="this.onerror=null; this.src='https://placehold.co/800x500/007EA1/FFFFFF?text=Universit%C3%A9+C%C3%B4te+d%27Azur';">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent flex items-end p-6">
+                            <p class="text-sm font-medium text-slate-200"><i class="fa-solid fa-location-dot text-[#E5005B] mr-2"></i>Bienvenue à l'Université Côte d'Azur</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Steps Section -->
+            <div class="space-y-6">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">Mes étapes pour la rentrée</h2>
+                    <p class="text-slate-500 mt-1">Suivez ce parcours étape par étape pour régulariser votre situation sereinement.</p>
+                </div>
+
+                <div class="grid gap-3">
+                    <!-- Step Item 1 -->
+                    <div class="p-4 sm:p-5 rounded-2xl bg-white border border-slate-200 hover:border-[#00AFD7] transition-all shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4 group">
+                        <div class="flex items-center gap-4">
+                            <span class="w-9 h-9 rounded-xl bg-slate-100 text-slate-800 font-bold flex items-center justify-center shrink-0 group-hover:bg-[#00AFD7] group-hover:text-white transition-colors">1</span>
+                            <span class="font-semibold text-slate-800 text-base sm:text-lg">Je fais mon inscription administrative</span>
+                        </div>
+                        <button onclick="switchTab('ressources')" class="self-end sm:self-auto px-4 py-2 rounded-xl text-sm font-semibold text-[#007EA1] bg-slate-50 hover:bg-[#00AFD7] hover:text-white transition-all flex items-center gap-2">
+                            <span>En savoir plus</span>
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+                    </div>
+
+                    <!-- Step Item 2 -->
+                    <div class="p-4 sm:p-5 rounded-2xl bg-white border border-slate-200 hover:border-[#00AFD7] transition-all shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4 group">
+                        <div class="flex items-center gap-4">
+                            <span class="w-9 h-9 rounded-xl bg-slate-100 text-slate-800 font-bold flex items-center justify-center shrink-0 group-hover:bg-[#00AFD7] group-hover:text-white transition-colors">2</span>
+                            <span class="font-semibold text-slate-800 text-base sm:text-lg">J'active mon identité numérique</span>
+                        </div>
+                        <button onclick="window.open('https://www.youtube.com/watch?v=TO9gn-9mfbs&list=PLPEE-1yyUF7E', '_blank')" class="self-end sm:self-auto px-4 py-2 rounded-xl text-sm font-semibold text-[#007EA1] bg-slate-50 hover:bg-[#00AFD7] hover:text-white transition-all flex items-center gap-2">
+                            <span>Voir la vidéo</span>
+                            <i class="fa-solid fa-play text-xs"></i>
+                        </button>
+                    </div>
+
+                   <!-- Step Item 3 -->
+<div class="p-4 sm:p-5 rounded-2xl bg-white border border-slate-200 hover:border-[#00AFD7] transition-all shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4 group">
+    <div class="flex items-center gap-4">
+        <span class="w-9 h-9 rounded-xl bg-slate-100 text-slate-800 font-bold flex items-center justify-center shrink-0 group-hover:bg-[#00AFD7] group-hover:text-white transition-colors">3</span>
+        <span class="font-semibold text-slate-800 text-base sm:text-lg">Je fais mon inscription pédagogique</span>
+    </div>
+    <a href="https://univ-cotedazur.fr/formation/candidater-et-s-inscrire/sinscrire/etapes-dinscription-administrative" 
+       target="_blank" 
+       rel="noopener noreferrer" 
+       class="self-end sm:self-auto px-4 py-2 rounded-xl text-sm font-semibold text-[#007EA1] bg-slate-50 hover:bg-[#00AFD7] hover:text-white transition-all flex items-center gap-2">
+        <span>Consulter la procédure</span>
+        <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+    </a>
+</div>
+
+                    <!-- Step Item 4 -->
+                    <div class="p-4 sm:p-5 rounded-2xl bg-white border border-slate-200 hover:border-[#00AFD7] transition-all shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4 group">
+                        <div class="flex items-center gap-4">
+                            <span class="w-9 h-9 rounded-xl bg-slate-100 text-slate-800 font-bold flex items-center justify-center shrink-0 group-hover:bg-[#00AFD7] group-hover:text-white transition-colors">4</span>
+                            <span class="font-semibold text-slate-800 text-base sm:text-lg">Je trouve mon emploi du temps</span>
+                        </div>
+                        <button onclick="switchTab('campus')" class="self-end sm:self-auto px-4 py-2 rounded-xl text-sm font-semibold text-[#007EA1] bg-slate-50 hover:bg-[#00AFD7] hover:text-white transition-all flex items-center gap-2">
+                            <span>M'expliquer</span>
+                            <i class="fa-solid fa-circle-info text-xs"></i>
+                        </button>
+                    </div>
+
+                    <!-- Step Item 5 -->
+                    <div class="p-4 sm:p-5 rounded-2xl bg-white border border-slate-200 hover:border-[#00AFD7] transition-all shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4 group">
+                        <div class="flex items-center gap-4">
+                            <span class="w-9 h-9 rounded-xl bg-slate-100 text-slate-800 font-bold flex items-center justify-center shrink-0 group-hover:bg-[#00AFD7] group-hover:text-white transition-colors">5</span>
+                            <span class="font-semibold text-slate-800 text-base sm:text-lg">Je repère le campus</span>
+                        </div>
+                        <button onclick="switchTab('campus')" class="self-end sm:self-auto px-4 py-2 rounded-xl text-sm font-semibold text-[#007EA1] bg-slate-50 hover:bg-[#00AFD7] hover:text-white transition-all flex items-center gap-2">
+                            <span>Voir le plan</span>
+                            <i class="fa-solid fa-map-location-dot text-xs"></i>
+                        </button>
+                    </div>
+
+                    <!-- Step Item 6 -->
+                    <div class="p-4 sm:p-5 rounded-2xl bg-white border border-slate-200 hover:border-[#00AFD7] transition-all shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4 group">
+                        <div class="flex items-center gap-4">
+                            <span class="w-9 h-9 rounded-xl bg-slate-100 text-slate-800 font-bold flex items-center justify-center shrink-0 group-hover:bg-[#00AFD7] group-hover:text-white transition-colors">6</span>
+                            <span class="font-semibold text-slate-800 text-base sm:text-lg">Je réalise mon passeport étudiant</span>
+                        </div>
+                        <button onclick="switchTab('passeport')" class="self-end sm:self-auto px-4 py-2 rounded-xl text-sm font-semibold text-[#007EA1] bg-slate-50 hover:bg-[#00AFD7] hover:text-white transition-all flex items-center gap-2">
+                            <span>En savoir plus</span>
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+                    </div>
+
+                    <!-- Step Item 7 -->
+                    <div class="p-4 sm:p-5 rounded-2xl bg-white border border-slate-200 hover:border-[#00AFD7] transition-all shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4 group">
+                        <div class="flex items-center gap-4">
+                            <span class="w-9 h-9 rounded-xl bg-slate-100 text-slate-800 font-bold flex items-center justify-center shrink-0 group-hover:bg-[#00AFD7] group-hover:text-white transition-colors">7</span>
+                            <span class="font-semibold text-slate-800 text-base sm:text-lg">Je comprends comment je vais être évalué</span>
+                        </div>
+                        <button onclick="window.open('https://www.youtube.com/watch?v=VT6p27t4bJo&list=PLPEE-1yyUF7E&index=3', '_blank')" class="self-end sm:self-auto px-4 py-2 rounded-xl text-sm font-semibold text-[#007EA1] bg-slate-50 hover:bg-[#00AFD7] hover:text-white transition-all flex items-center gap-2">
+                            <span>Voir la vidéo</span>
+                            <i class="fa-solid fa-play text-xs"></i>
+                        </button>
+                    </div>
+
+                    <!-- Step Item 8 -->
+                    <div class="p-4 sm:p-5 rounded-2xl bg-white border border-slate-200 hover:border-[#00AFD7] transition-all shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4 group">
+                        <div class="flex items-center gap-4">
+                            <span class="w-9 h-9 rounded-xl bg-slate-100 text-slate-800 font-bold flex items-center justify-center shrink-0 group-hover:bg-[#00AFD7] group-hover:text-white transition-colors">8</span>
+                            <span class="font-semibold text-slate-800 text-base sm:text-lg">Je demande de l'aide</span>
+                        </div>
+                        <button onclick="switchTab('aides')" class="self-end sm:self-auto px-4 py-2 rounded-xl text-sm font-semibold text-[#007EA1] bg-slate-50 hover:bg-[#00AFD7] hover:text-white transition-all flex items-center gap-2">
+                            <span>Voir les contacts</span>
+                            <i class="fa-regular fa-address-book text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Annonces et dates clés -->
+            <div class="space-y-6 pt-4">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Annonces et dates clés</h2>
+                    <span class="text-xs font-semibold text-[#E5005B] bg-[#E5005B]/10 px-3 py-1 rounded-full">
+                        <i class="fa-regular fa-calendar-check mr-1"></i> Planning Septembre 2026
+                    </span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                    <!-- Date Card 1 -->
+                    <div class="p-5 rounded-2xl bg-slate-100 border border-slate-200 flex flex-col justify-between hover:shadow-md transition-all relative overflow-hidden">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="font-bold text-slate-900 text-base">Passeport étudiant</h3>
+                            <div class="bg-slate-800 text-white font-bold text-xs px-2.5 py-1.5 rounded-xl text-center leading-tight">
+                                15<br><span class="text-[10px] uppercase font-normal">Sept</span>
+                            </div>
+                        </div>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Date limite de réalisation du passeport étudiant. Plus d'info sur la rubrique Passeport.
+                        </p>
+                    </div>
+
+                    <!-- Date Card 2 -->
+                    <div class="p-5 rounded-2xl bg-slate-100 border border-slate-200 flex flex-col justify-between hover:shadow-md transition-all relative overflow-hidden">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="font-bold text-slate-900 text-base">Webinaire international</h3>
+                            <div class="bg-[#007EA1] text-white font-bold text-xs px-2.5 py-1.5 rounded-xl text-center leading-tight">
+                                10<br><span class="text-[10px] uppercase font-normal">Sept</span>
+                            </div>
+                        </div>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Session d'information en ligne dédiée aux démarches administratives et visas.
+                        </p>
+                    </div>
+
+                    <!-- Date Card 3 -->
+                    <div class="p-5 rounded-2xl bg-slate-100 border border-slate-200 flex flex-col justify-between hover:shadow-md transition-all relative overflow-hidden">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="font-bold text-slate-900 text-base">Atelier Rentrée tardive</h3>
+                            <div class="bg-[#00AFD7] text-white font-bold text-xs px-2.5 py-1.5 rounded-xl text-center leading-tight">
+                                21<br><span class="text-[10px] uppercase font-normal">Sept</span>
+                            </div>
+                        </div>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Accompagnement personnalisé pour rattraper les cours manqués.
+                        </p>
+                    </div>
+
+                    <!-- Date Card 4 -->
+                    <div class="p-5 rounded-2xl bg-slate-100 border border-slate-200 flex flex-col justify-between hover:shadow-md transition-all relative overflow-hidden">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="font-bold text-slate-900 text-base">Welcome Days</h3>
+                            <div class="bg-[#E5005B] text-white font-bold text-xs px-2.5 py-1.5 rounded-xl text-center leading-tight">
+                                11<br><span class="text-[10px] uppercase font-normal">Sept</span>
+                            </div>
+                        </div>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Journées d'accueil, animations culturelles et stands d'associations.
+                        </p>
+                    </div>
+
+                    <!-- Date Card 5 -->
+                    <div class="p-5 rounded-2xl bg-slate-100 border border-slate-200 flex flex-col justify-between hover:shadow-md transition-all relative overflow-hidden">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="font-bold text-slate-900 text-base">Aide à la réussite</h3>
+                            <div class="bg-slate-700 text-white font-bold text-xs px-2.5 py-1.5 rounded-xl text-center leading-tight">
+                                2026<br><span class="text-[10px] uppercase font-normal">2027</span>
+                            </div>
+                        </div>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Tutorat et soutien académique disponibles tout au long de l'année.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Community & Forum -->
+            <div class="space-y-6 pt-4">
+                <h2 class="text-2xl font-bold text-slate-900 tracking-tight">S'intégrer mieux avec la communauté et forum</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- WhatsApp Community Card -->
+                    <div class="p-6 sm:p-8 rounded-3xl bg-slate-800 text-white flex flex-col justify-between gap-6 shadow-lg relative overflow-hidden">
+                        <div class="flex items-start justify-between gap-4">
+                            <div class="space-y-2">
+                                <h3 class="text-xl font-bold">Communauté sur WhatsApp</h3>
+                                <p class="text-slate-300 text-sm leading-relaxed">
+                                    Rejoins le groupe sur WhatsApp pour ne pas manquer des annonces et rappels importants.
+                                </p>
+                            </div>
+                            <div class="w-16 h-16 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-3xl shrink-0">
+                                <i class="fa-brands fa-whatsapp"></i>
+                            </div>
+                        </div>
+                        <a href="https://whatsapp.com" target="_blank" class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-white text-slate-900 font-semibold hover:bg-slate-100 transition-all self-start">
+                            <span>Rejoindre</span>
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </a>
+                    </div>
+
+                    <!-- Forum Entraide Card -->
+                    <div class="p-6 sm:p-8 rounded-3xl bg-slate-800 text-white flex flex-col justify-between gap-6 shadow-lg relative overflow-hidden">
+                        <div class="flex items-start justify-between gap-4">
+                            <div class="space-y-2">
+                                <h3 class="text-xl font-bold">Forum entraide</h3>
+                                <p class="text-slate-300 text-sm leading-relaxed">
+                                    Une question ? Posez-la sur le forum de votre Passeport étudiant : ce sont d'autres étudiants qui vous répondent.
+                                </p>
+                            </div>
+                            <div class="w-16 h-16 rounded-2xl bg-[#00AFD7]/20 text-[#00AFD7] flex items-center justify-center text-3xl shrink-0">
+                                <i class="fa-solid fa-handshake-angle"></i>
+                            </div>
+                        </div>
+                        <button onclick="switchTab('passeport')" class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-white text-slate-900 font-semibold hover:bg-slate-100 transition-all self-start">
+                            <span>En savoir plus sur Passeport</span>
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PAGE 2: RESSOURCES ================= -->
+        <section id="page-ressources" class="tab-page hidden space-y-10">
+            <!-- Header section -->
+            <div class="border-b border-slate-200 pb-6">
+                <span class="text-xs font-bold text-[#007EA1] tracking-wider uppercase">Ressources</span>
+                <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-1">Les tutos et les outils pour t'y retrouver</h1>
+                <p class="text-slate-600 mt-2">On vous propose les vidéos courtes préparées à l'avance pour vous guider pas à pas.</p>
+            </div>
+
+            <!-- Inscription Administrative Highlight Banner -->
+            <div class="p-6 sm:p-8 rounded-3xl bg-slate-200/80 border border-slate-300/80 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative overflow-hidden">
+                <div class="max-w-3xl space-y-3">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#007EA1] text-white text-xs font-semibold">
+                        <i class="fa-solid fa-star"></i> Étape prioritaire
+                    </div>
+                    <h2 class="text-2xl font-bold text-slate-900">Inscription administrative</h2>
+                    <p class="text-slate-700 text-sm leading-relaxed">
+                        C'est l'étape qui débloque tout le reste : votre certificat de scolarité, votre carte étudiante et vos accès numériques. Pour accéder à Mon Compte, vous devez d'abord finaliser votre inscription administrative et régler la totalité de vos frais d'inscription. Une question sur cette inscription ? Rendez-vous dans la rubrique « Aides et contacts ».
+                    </p>
+                </div>
+                <button onclick="switchTab('aides')" class="shrink-0 px-6 py-3.5 rounded-xl bg-[#007EA1] hover:bg-[#00AFD7] text-white font-semibold transition-all shadow-md flex items-center gap-2 whitespace-nowrap">
+                    <span>En savoir plus</span>
+                    <i class="fa-solid fa-arrow-right text-xs"></i>
+                </button>
+            </div>
+
+            <!-- Video Tutorials Grid Section -->
+            <div class="space-y-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <h2 class="text-2xl font-bold text-slate-900">Tutoriels vidéo</h2>
+                    <!-- Category filter tags -->
+                    <div class="flex flex-wrap gap-2">
+                        <button onclick="filterVideos('all')" class="vid-filter active px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-900 text-white transition-all">Tous</button>
+                        <button onclick="filterVideos('Outils')" class="vid-filter px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-all">Outils</button>
+                        <button onclick="filterVideos('Examens')" class="vid-filter px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-all">Examens</button>
+                        <button onclick="filterVideos('Cours')" class="vid-filter px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-all">Cours</button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Video Card 1 -->
+                    <div class="video-card bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition-all group cursor-pointer"
+                         data-category="Outils"
+                         onclick="window.open('https://www.youtube.com/watch?v=TO9gn-9mfbs', '_blank')">
+                        <div class="relative bg-slate-700 aspect-video flex items-center justify-center overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=600&q=80" alt="Identité Numérique" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                            <div class="absolute inset-0 bg-slate-900/40 group-hover:bg-slate-900/20 transition-colors flex items-center justify-center">
+                                <div class="w-14 h-14 rounded-full bg-white/90 group-hover:bg-[#E5005B] text-slate-900 group-hover:text-white flex items-center justify-center text-xl shadow-lg transition-all transform group-hover:scale-110">
+                                    <i class="fa-solid fa-play ml-1"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-5 space-y-3">
+                            <div class="flex gap-2">
+                                <span class="px-2.5 py-1 rounded-md bg-slate-100 text-slate-700 text-xs font-semibold">Outils</span>
+                            </div>
+                            <h3 class="font-bold text-slate-900 group-hover:text-[#007EA1] transition-colors leading-snug">
+                                Maîtrisez votre Identité Numérique avec "MonCompte"
+                            </h3>
+                        </div>
+                    </div>
+
+                    <!-- Video Card 2 -->
+                    <div class="video-card bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition-all group cursor-pointer"
+                         data-category="Outils"
+                         onclick="window.open('https://youtu.be/SWIDVGO3Gg0?si=tXxSjzpVlA5CK_IA', '_blank')">
+                        <div class="relative bg-slate-700 aspect-video flex items-center justify-center overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80" alt="Intranet Étudiant" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                            <div class="absolute inset-0 bg-slate-900/40 group-hover:bg-slate-900/20 transition-colors flex items-center justify-center">
+                                <div class="w-14 h-14 rounded-full bg-white/90 group-hover:bg-[#E5005B] text-slate-900 group-hover:text-white flex items-center justify-center text-xl shadow-lg transition-all transform group-hover:scale-110">
+                                    <i class="fa-solid fa-play ml-1"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-5 space-y-3">
+                            <div class="flex gap-2">
+                                <span class="px-2.5 py-1 rounded-md bg-slate-100 text-slate-700 text-xs font-semibold">Outils</span>
+                            </div>
+                            <h3 class="font-bold text-slate-900 group-hover:text-[#007EA1] transition-colors leading-snug">
+                                Découvrir votre Intranet étudiant
+                            </h3>
+                        </div>
+                    </div>
+
+                    <!-- Video Card 3 -->
+                    <div class="video-card bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition-all group cursor-pointer"
+                         data-category="Outils"
+                         onclick="window.open('https://www.youtube.com/watch?v=LqIyKa1AVzM&list=PLV8G_tL0jD2Iceyd24DsfNAWUK3rfDEp0&index=2', '_blank')">
+                        <div class="relative bg-slate-700 aspect-video flex items-center justify-center overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1596526131083-e8c633c948d2?auto=format&fit=crop&w=600&q=80" alt="Messagerie" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                            <div class="absolute inset-0 bg-slate-900/40 group-hover:bg-slate-900/20 transition-colors flex items-center justify-center">
+                                <div class="w-14 h-14 rounded-full bg-white/90 group-hover:bg-[#E5005B] text-slate-900 group-hover:text-white flex items-center justify-center text-xl shadow-lg transition-all transform group-hover:scale-110">
+                                    <i class="fa-solid fa-play ml-1"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-5 space-y-3">
+                            <div class="flex gap-2">
+                                <span class="px-2.5 py-1 rounded-md bg-slate-100 text-slate-700 text-xs font-semibold">Outils</span>
+                            </div>
+                            <h3 class="font-bold text-slate-900 group-hover:text-[#007EA1] transition-colors leading-snug">
+                                La messagerie universitaire
+                            </h3>
+                        </div>
+                    </div>
+
+                    <!-- Video Card 4 -->
+                    <div class="video-card bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition-all group cursor-pointer"
+                         data-category="Examens Cours"
+                         onclick="window.open('https://www.youtube.com/watch?v=VT6p27t4bJo&list=PLPEE-1yyUF7E&index=3', '_blank')">
+                        <div class="relative bg-slate-700 aspect-video flex items-center justify-center overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80" alt="Modalités de Contrôle" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                            <div class="absolute inset-0 bg-slate-900/40 group-hover:bg-slate-900/20 transition-colors flex items-center justify-center">
+                                <div class="w-14 h-14 rounded-full bg-white/90 group-hover:bg-[#E5005B] text-slate-900 group-hover:text-white flex items-center justify-center text-xl shadow-lg transition-all transform group-hover:scale-110">
+                                    <i class="fa-solid fa-play ml-1"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-5 space-y-3">
+                            <div class="flex gap-2">
+                                <span class="px-2.5 py-1 rounded-md bg-slate-100 text-slate-700 text-xs font-semibold">Examens</span>
+                                <span class="px-2.5 py-1 rounded-md bg-slate-100 text-slate-700 text-xs font-semibold">Cours</span>
+                            </div>
+                            <h3 class="font-bold text-slate-900 group-hover:text-[#007EA1] transition-colors leading-snug">
+                                Comprendre les Modalités de Contrôle des Connaissances (MCC)
+                            </h3>
+                        </div>
+                    </div>
+
+                    <!-- Video Card 5 -->
+                    <div class="video-card bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition-all group cursor-pointer"
+                         data-category="Cours"
+                         onclick="window.open('https://www.youtube.com/watch?v=dlivbjLSEBY&list=PLV8G_tL0jD2Iceyd24DsfNAWUK3rfDEp0&index=10', '_blank')">
+                        <div class="relative bg-slate-700 aspect-video flex items-center justify-center overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=600&q=80" alt="Syllabus" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                            <div class="absolute inset-0 bg-slate-900/40 group-hover:bg-slate-900/20 transition-colors flex items-center justify-center">
+                                <div class="w-14 h-14 rounded-full bg-white/90 group-hover:bg-[#E5005B] text-slate-900 group-hover:text-white flex items-center justify-center text-xl shadow-lg transition-all transform group-hover:scale-110">
+                                    <i class="fa-solid fa-play ml-1"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-5 space-y-3">
+                            <div class="flex gap-2">
+                                <span class="px-2.5 py-1 rounded-md bg-slate-100 text-slate-700 text-xs font-semibold">Cours</span>
+                            </div>
+                            <h3 class="font-bold text-slate-900 group-hover:text-[#007EA1] transition-colors leading-snug">
+                                Le syllabus, le mode d'emploi pour votre réussite
+                            </h3>
+                        </div>
+                    </div>
+
+                    <!-- Video Card 6 -->
+                    <div class="video-card bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition-all group cursor-pointer"
+                         data-category="Cours"
+                         onclick="window.open('https://www.youtube.com/watch?v=2rR1brmxbkU&list=PLPEE-1yyUF7E&index=2', '_blank')">
+                        <div class="relative bg-slate-700 aspect-video flex items-center justify-center overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=600&q=80" alt="UE ECUE" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                            <div class="absolute inset-0 bg-slate-900/40 group-hover:bg-slate-900/20 transition-colors flex items-center justify-center">
+                                <div class="w-14 h-14 rounded-full bg-white/90 group-hover:bg-[#E5005B] text-slate-900 group-hover:text-white flex items-center justify-center text-xl shadow-lg transition-all transform group-hover:scale-110">
+                                    <i class="fa-solid fa-play ml-1"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-5 space-y-3">
+                            <div class="flex gap-2">
+                                <span class="px-2.5 py-1 rounded-md bg-slate-100 text-slate-700 text-xs font-semibold">Cours</span>
+                            </div>
+                            <h3 class="font-bold text-slate-900 group-hover:text-[#007EA1] transition-colors leading-snug">
+                                UE ECUE
+                            </h3>
+                        </div>
+                    </div>
+
+                    <!-- Video Card 7 -->
+                    <div class="video-card bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition-all group cursor-pointer"
+                         data-category="Outils"
+                         onclick="window.open('https://www.youtube.com/watch?v=uEgdTfBzIsE&list=PLV8G_tL0jD2Iceyd24DsfNAWUK3rfDEp0&index=4', '_blank')">
+                        <div class="relative bg-slate-700 aspect-video flex items-center justify-center overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=600&q=80" alt="Certificat scolarité" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                            <div class="absolute inset-0 bg-slate-900/40 group-hover:bg-slate-900/20 transition-colors flex items-center justify-center">
+                                <div class="w-14 h-14 rounded-full bg-white/90 group-hover:bg-[#E5005B] text-slate-900 group-hover:text-white flex items-center justify-center text-xl shadow-lg transition-all transform group-hover:scale-110">
+                                    <i class="fa-solid fa-play ml-1"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-5 space-y-3">
+                            <div class="flex gap-2">
+                                <span class="px-2.5 py-1 rounded-md bg-slate-100 text-slate-700 text-xs font-semibold">Outils</span>
+                            </div>
+                            <h3 class="font-bold text-slate-900 group-hover:text-[#007EA1] transition-colors leading-snug">
+                                Comment télécharger votre certificat de scolarité
+                            </h3>
+                        </div>
+                    </div>
+
+                    <!-- Video Card 8 -->
+                    <div class="video-card bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition-all group cursor-pointer"
+                         data-category="Outils"
+                         onclick="window.open('https://www.youtube.com/watch?v=TO9gn-9mfbs&list=PLPEE-1yyUF7E&index=1', '_blank')">
+                        <div class="relative bg-slate-700 aspect-video flex items-center justify-center overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=600&q=80" alt="4 Incontournables" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                            <div class="absolute inset-0 bg-slate-900/40 group-hover:bg-slate-900/20 transition-colors flex items-center justify-center">
+                                <div class="w-14 h-14 rounded-full bg-white/90 group-hover:bg-[#E5005B] text-slate-900 group-hover:text-white flex items-center justify-center text-xl shadow-lg transition-all transform group-hover:scale-110">
+                                    <i class="fa-solid fa-play ml-1"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-5 space-y-3">
+                            <div class="flex gap-2">
+                                <span class="px-2.5 py-1 rounded-md bg-slate-100 text-slate-700 text-xs font-semibold">Outils</span>
+                            </div>
+                            <h3 class="font-bold text-slate-900 group-hover:text-[#007EA1] transition-colors leading-snug">
+                                4 incontournables
+                            </h3>
+                        </div>
+                    </div>
+
+                    <!-- Video Card 9 -->
+                    <div class="video-card bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition-all group cursor-pointer"
+                         data-category="Outils"
+                         onclick="window.open('https://www.youtube.com/watch?v=KDd3JMkRvbI&list=PLV8G_tL0jD2Iceyd24DsfNAWUK3rfDEp0&index=7', '_blank')">
+                        <div class="relative bg-slate-700 aspect-video flex items-center justify-center overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&w=600&q=80" alt="Moodle" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                            <div class="absolute inset-0 bg-slate-900/40 group-hover:bg-slate-900/20 transition-colors flex items-center justify-center">
+                                <div class="w-14 h-14 rounded-full bg-white/90 group-hover:bg-[#E5005B] text-slate-900 group-hover:text-white flex items-center justify-center text-xl shadow-lg transition-all transform group-hover:scale-110">
+                                    <i class="fa-solid fa-play ml-1"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-5 space-y-3">
+                            <div class="flex gap-2">
+                                <span class="px-2.5 py-1 rounded-md bg-slate-100 text-slate-700 text-xs font-semibold">Outils</span>
+                            </div>
+                            <h3 class="font-bold text-slate-900 group-hover:text-[#007EA1] transition-colors leading-snug">
+                                Moodle
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PAGE 3: CAMPUS & EMPLOI DU TEMPS ================= -->
+        <section id="page-campus" class="tab-page hidden space-y-12">
+            <!-- Header section -->
+            <div class="border-b border-slate-200 pb-6">
+                <span class="text-xs font-bold text-[#007EA1] tracking-wider uppercase">Plan de campus et Emploi de temps</span>
+                <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-1">Te repérer et t'y organiser</h1>
+                <p class="text-slate-600 mt-2">On vous propose les vidéos courtes préparées à l'avance et les plans interactifs.</p>
+            </div>
+
+            <!-- Finding Timetable Video Banner -->
+            <div class="p-6 sm:p-8 rounded-3xl bg-slate-200/80 border border-slate-300/80 space-y-6">
+                <div class="max-w-3xl space-y-2">
+                    <h2 class="text-2xl font-bold text-slate-900">Trouver ton emploi de temps</h2>
+                    <p class="text-slate-700 text-sm leading-relaxed">
+                        L'accès anticipé à votre emploi du temps n'est pas possible : c'est le cas pour tous les étudiants. En attendant, cette vidéo vous montre comment retrouver vos cours sur ADE.
+                    </p>
+                </div>
+
+                <!-- Video Card Preview -->
+                <div class="bg-slate-900 rounded-2xl overflow-hidden shadow-xl max-w-2xl mx-auto border border-slate-700 relative group cursor-pointer"
+                     onclick="window.open('https://www.youtube.com/watch?v=T6CI_hIbJIA&list=PLV8G_tL0jD2Iceyd24DsfNAWUK3rfDEp0&index=8', '_blank')">
+                    <div class="relative aspect-video bg-gradient-to-tr from-slate-900 to-slate-800 flex items-center justify-center">
+                        <img src="https://images.unsplash.com/photo-1506784983877-45594b0db644?auto=format&fit=crop&w=1000&q=80" alt="Emploi du temps ADE" class="w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-slate-900/30 flex flex-col items-center justify-center gap-3 p-4 text-center">
+                            <div class="w-16 h-16 rounded-full bg-[#00AFD7] text-white flex items-center justify-center text-2xl shadow-xl group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-play ml-1"></i>
+                            </div>
+                            <span class="bg-black/70 text-white font-bold text-sm px-4 py-1.5 rounded-full backdrop-blur-md">
+                                <i class="fa-regular fa-clock mr-1.5"></i>1:49 min
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-4 bg-slate-800 text-white flex justify-between items-center">
+                        <div>
+                            <p class="font-bold text-base">Consultez votre emploi du temps avec ADE</p>
+                            <p class="text-xs text-slate-400">Université Côte d'Azur • Réussite Étudiante</p>
+                        </div>
+                        <span class="text-xs text-slate-400 font-medium">1,4 k vues • il y a 11 mois</span>
+                    </div>
+                </div>
+          
+          <!-- Redirection Vie des Campus -->
+<div class="p-8 rounded-3xl bg-slate-100 border border-slate-200 text-center space-y-6">
+    <div class="max-w-xl mx-auto space-y-2">
+        <h2 class="text-2xl font-bold text-slate-900">Plans et vie des campus</h2>
+        <p class="text-slate-600 text-sm">
+            Retrouvez toutes les informations sur les campus, les cartes interactives et les plans téléchargeables directement sur le site officiel.
+        </p>
+    </div>
+    
+    <a href="https://univ-cotedazur.fr/vie-des-campus" 
+       target="_blank" 
+       rel="noopener noreferrer" 
+       class="inline-flex items-center justify-center gap-3 py-3.5 px-6 rounded-xl bg-[#007EA1] hover:bg-[#00AFD7] text-white font-semibold transition-all shadow-md hover:shadow-lg">
+        <i class="fa-solid fa-compass text-lg"></i>
+        <span>Découvrir la vie des campus</span>
+        <i class="fa-solid fa-arrow-up-right-from-square text-xs opacity-80"></i>
+    </a>
+</div>
+
+           
+                                  
+             
+            
+        </section>
+
+        <!-- ================= PAGE 4: PASSEPORT ================= -->
+        <section id="page-passeport" class="tab-page hidden space-y-12">
+            <!-- Header section -->
+            <div class="border-b border-slate-200 pb-6">
+                <span class="text-xs font-bold text-[#007EA1] tracking-wider uppercase">Passeport étudiant</span>
+                <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-1">Passeport étudiant et compétences transversales</h1>
+                <p class="text-slate-600 mt-2 max-w-3xl">
+                    Le Passeport Étudiant est un cours sur Moodle : obligatoire, mais non noté. Le valider, c'est la clé qui débloque vos compétences transversales.
+                </p>
+            </div>
+
+            <!-- Top 3 Info Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Card 1 -->
+                <div class="p-8 rounded-3xl bg-slate-200/90 border border-slate-300 flex flex-col justify-between text-center gap-4 hover:shadow-lg transition-all">
+                    <div class="w-12 h-12 rounded-2xl bg-[#007EA1] text-white font-bold text-xl flex items-center justify-center mx-auto">1</div>
+                    <h3 class="text-xl font-bold text-slate-900">Obligatoire, mais non noté</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        Vous devez le valider sur Moodle, mais il ne compte pas dans votre moyenne générale.
+                    </p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="p-8 rounded-3xl bg-slate-200/90 border border-slate-300 flex flex-col justify-between text-center gap-4 hover:shadow-lg transition-all">
+                    <div class="w-12 h-12 rounded-2xl bg-[#00AFD7] text-white font-bold text-xl flex items-center justify-center mx-auto">2</div>
+                    <h3 class="text-xl font-bold text-slate-900">En retard ? Faites-le quand même</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        La date limite est le 15 septembre, mais vous pouvez toujours le réaliser après. L'essentiel, c'est de le valider.
+                    </p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="p-8 rounded-3xl bg-slate-200/90 border border-slate-300 flex flex-col justify-between text-center gap-4 hover:shadow-lg transition-all">
+                    <div class="w-12 h-12 rounded-2xl bg-[#E5005B] text-white font-bold text-xl flex items-center justify-center mx-auto">3</div>
+                    <h3 class="text-xl font-bold text-slate-900">Il débloque la suite</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        Le valider ouvre votre première compétence transversale. C'est un cours obligatoire et noté.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Dark Forum Alert Banner -->
+            <div class="p-6 sm:p-8 rounded-3xl bg-slate-700 text-white flex flex-col sm:flex-row items-center gap-6 shadow-xl">
+                <div class="w-16 h-16 rounded-2xl bg-white/10 flex items-center justify-center text-3xl shrink-0 text-[#00AFD7]">
+                    <i class="fa-solid fa-comments"></i>
+                </div>
+                <div class="space-y-1 text-center sm:text-left">
+                    <h3 class="text-xl font-bold">Bloqué(e) sur votre Passeport ?</h3>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        Un forum d'entraide est là pour vos questions. Ce sont des étudiants qui sont déjà passés par là qui vous répondent.
+                    </p>
+                </div>
+                <button onclick="switchTab('aides')" class="sm:ml-auto shrink-0 px-6 py-3 rounded-xl bg-[#00AFD7] hover:bg-[#007EA1] text-white font-semibold transition-all">
+                    Poser une question
+                </button>
+            </div>
+
+            <!-- Video / GIF Tutorial Section -->
+            <div class="space-y-4 text-center">
+                <h2 class="text-2xl font-bold text-slate-900">Où trouver votre passeport ?</h2>
+                <div class="rounded-3xl bg-slate-200/90 border border-slate-300 p-8 sm:p-16 flex flex-col items-center justify-center min-h-[280px] shadow-inner group cursor-pointer"
+                     onclick="window.open('https://www.youtube.com/watch?v=ID_VIDÉO_PASSEPORT', '_blank')">
+                    <div class="w-20 h-20 rounded-full bg-slate-800 group-hover:bg-[#E5005B] text-white flex items-center justify-center text-3xl shadow-xl transition-all transform group-hover:scale-110 mb-4">
+                        <i class="fa-solid fa-play ml-1"></i>
+                    </div>
+                    <span class="text-xl font-bold text-slate-800">Une vidéo GIF d'explication</span>
+                    <p class="text-xs text-slate-500 mt-1">Cliquez pour voir le tutoriel animé Moodle</p>
+                </div>
+            </div>
+
+            <!-- Les compétences transversales Section -->
+            <div class="space-y-8 pt-4">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-900">Les compétences transversales</h2>
+                    <p class="text-slate-600 mt-1">Un cours en ligne, obligatoire et noté, commun à tous les étudiants de licence, qui s'étale sur les trois années.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Card 1 -->
+                    <div class="p-8 rounded-3xl bg-slate-200/90 border border-slate-300 space-y-3">
+                        <h3 class="text-xl font-bold text-slate-900">En autonomie, à votre rythme</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            Seul(e) ou en groupe. Le conseil : prenez-vous à l'avance et ne découvrez pas le cours la veille des examens.
+                        </p>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="p-8 rounded-3xl bg-slate-200/90 border border-slate-300 space-y-3">
+                        <h3 class="text-xl font-bold text-slate-900">Attention aux deadlines</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            Certains modules ont des dates limites. Connectez-vous régulièrement pour ne rien manquer.
+                        </p>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="p-8 rounded-3xl bg-slate-200/90 border border-slate-300 space-y-3">
+                        <h3 class="text-xl font-bold text-slate-900">Ça compte dans ta moyenne</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            Validez les modules et soignez les exercices : ils reviennent souvent aux examens.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Alert Box Bottom -->
+                <div class="p-6 sm:p-8 rounded-3xl bg-slate-700 text-white flex items-center gap-6 shadow-xl">
+                    <div class="w-14 h-14 rounded-2xl bg-[#E5005B] text-white flex items-center justify-center text-2xl shrink-0">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                    </div>
+                    <p class="text-sm leading-relaxed text-slate-200">
+                        En L1, votre première compétence transversale, <span class="font-bold text-white">Compétence Écrite</span>, s'ouvre seulement après avoir validé votre Passeport Étudiant. Pensez donc à le valider d'abord.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PAGE 5: AIDES ET CONTACTS ================= -->
+        <section id="page-aides" class="tab-page hidden space-y-8">
+            <!-- Header section -->
+            <div class="border-b border-slate-200 pb-6">
+                <span class="text-xs font-bold text-[#007EA1] tracking-wider uppercase">Aides et contacts</span>
+                <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-1">De quoi as-tu besoin ?</h1>
+                <p class="text-slate-600 mt-2">Choisis ta situation : on t'indique la bonne personne à contacter et comment.</p>
+            </div>
+
+            <!-- Interactive Accordion List -->
+            <div class="space-y-4 max-w-4xl">
+                <!-- Accordion 1 -->
+                <div class="rounded-2xl bg-slate-200/80 border border-slate-300 overflow-hidden transition-all">
+                    <button onclick="toggleAccordion('acc-1')" class="w-full p-5 sm:p-6 text-left flex items-center justify-between font-bold text-slate-900 text-lg hover:text-[#007EA1] transition-colors focus:outline-none">
+                        <span>J'ai besoin d'un accompagnement pour ma rentrée tardive</span>
+                        <div id="acc-1-icon" class="w-8 h-8 rounded-full bg-white flex items-center justify-center text-slate-700 font-bold shrink-0 transition-transform">
+                            <i class="fa-solid fa-plus"></i>
+                        </div>
+                    </button>
+                    <div id="acc-1" class="accordion-content bg-white/70 px-6">
+                        <div class="py-4 space-y-3 text-slate-700 text-sm">
+                            <p><strong>Cellule d'Accompagnement Rentrée Tardive :</strong> Nos tuteurs pédagogiques vous aident à rattraper les cours manqués, accéder aux supports Moodle et contacter les responsables de filière.</p>
+                            <div class="flex flex-wrap gap-2 pt-2">
+                                <a href="mailto:rentree-tardive@univ-cotedazur.fr" class="px-4 py-2 rounded-xl bg-slate-900 text-white font-medium text-xs hover:bg-[#007EA1] transition-colors">
+                                    <i class="fa-regular fa-envelope mr-1"></i> Contactez le tuteur
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                <!-- Autres accordions inchangés -->
+                <!-- ... -->
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-slate-400 border-t border-slate-800 mt-16 py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-[#00AFD7] text-white flex items-center justify-center font-bold text-sm">
+                    RE
+                </div>
+                <span class="text-white font-semibold text-sm">Rentrée Express • Université Côte d'Azur</span>
+            </div>
+            <p class="text-xs text-slate-500 text-center md:text-right">
+                © 2026 Université Côte d'Azur. Guide d'accueil des étudiants en rentrée tardive.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 bg-slate-900 text-white px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 transform translate-y-20 opacity-0 transition-all duration-300">
+        <i id="toast-icon" class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
+        <span id="toast-message" class="text-sm font-medium">Notification message</span>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Page switching tab routing
+        function switchTab(tabId) {
+            // Hide all tabs
+            const pages = document.querySelectorAll('.tab-page');
+            pages.forEach(page => page.classList.add('hidden'));
+
+            // Deactivate all nav buttons
+            const navBtns = document.querySelectorAll('.tab-btn');
+            navBtns.forEach(btn => btn.classList.remove('active'));
+
+            // Show selected page
+            const targetPage = document.getElementById('page-' + tabId);
+            if (targetPage) {
+                targetPage.classList.remove('hidden');
+            }
+
+            // Activate corresponding button
+            const targetBtn = document.getElementById('nav-' + tabId);
+            if (targetBtn) {
+                targetBtn.classList.add('active');
+            }
+
+            // Scroll smoothly to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Toggle Mobile Navigation
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Accordion Toggle
+        function toggleAccordion(accId) {
+            const content = document.getElementById(accId);
+            const icon = document.getElementById(accId + '-icon');
+
+            if (!content) return;
+
+            const isOpen = content.classList.contains('open');
+
+            if (isOpen) {
+                content.classList.remove('open');
+                if (icon) icon.classList.remove('rotate-45');
+            } else {
+                content.classList.add('open');
+                if (icon) icon.classList.add('rotate-45');
+            }
+        }
+
+        // Filter Video Cards
+        function filterVideos(category) {
+            const cards = document.querySelectorAll('.video-card');
+            const filterBtns = document.querySelectorAll('.vid-filter');
+
+            // Update active state on buttons
+            filterBtns.forEach(btn => {
+                if ((category === 'all' && btn.innerText.trim() === 'Tous') || btn.innerText.trim() === category) {
+                    btn.classList.add('bg-slate-900', 'text-white');
+                    btn.classList.remove('bg-slate-100', 'text-slate-700');
+                } else {
+                    btn.classList.remove('bg-slate-900', 'text-white');
+                    btn.classList.add('bg-slate-100', 'text-slate-700');
+                }
+            });
+
+            // Filter cards
+            cards.forEach(card => {
+                const cardCat = card.getAttribute('data-category');
+                if (category === 'all' || cardCat.includes(category)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Simulated Download PDF
+        function downloadPdf(campusName) {
+            showToast(`Téléchargement du plan PDF du ${campusName} démarré...`, 'fa-circle-arrow-down');
+        }
+
+        // Interactive Map detail toast
+        function showMapDetail(title, desc) {
+            showToast(`${title} : ${desc}`, 'fa-map-pin');
+        }
+
+        // Copy Email function using fallback
+        function copyEmail(email) {
+            const tempInput = document.createElement('input');
+            tempInput.value = email;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+
+            showToast(`Adresse e-mail copiée : ${email}`, 'fa-copy');
+        }
+
+        // Toast notification system
+        function showToast(message, iconClass = 'fa-circle-check') {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-message');
+            const toastIcon = document.getElementById('toast-icon');
+
+            toastMsg.innerText = message;
+            toastIcon.className = `fa-solid ${iconClass} text-[#00AFD7] text-lg`;
+
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
