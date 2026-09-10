@@ -911,8 +911,8 @@
             <!-- Header section -->
             <div class="border-b border-slate-200 pb-6">
                 <span class="text-xs font-bold text-[#007EA1] tracking-wider uppercase">Aides et contacts</span>
-                <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-1">De quoi avez-vous besoin ?</h1>
-                <p class="text-slate-600 mt-2">Choisissez votre situation : on vous indique la bonne personne à contacter, et comment.</p>
+                <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-1">De quoi as-tu besoin ?</h1>
+                <p class="text-slate-600 mt-2">Choisis ta situation pour trouver la bonne personne à contacter et les démarches à suivre.</p>
             </div>
 
             <!-- Interactive Accordion List -->
@@ -920,25 +920,216 @@
                 <!-- Accordion 1 -->
                 <div class="rounded-2xl bg-slate-200/80 border border-slate-300 overflow-hidden transition-all">
                     <button onclick="toggleAccordion('acc-1')" class="w-full p-5 sm:p-6 text-left flex items-center justify-between font-bold text-slate-900 text-lg hover:text-[#007EA1] transition-colors focus:outline-none">
-                        <span>J'ai besoin d'un accompagnement pour ma rentrée tardive</span>
+                        <span>J’ai besoin d’un accompagnement pour ma rentrée tardive</span>
                         <div id="acc-1-icon" class="w-8 h-8 rounded-full bg-white flex items-center justify-center text-slate-700 font-bold shrink-0 transition-transform">
                             <i class="fa-solid fa-plus"></i>
                         </div>
                     </button>
                     <div id="acc-1" class="accordion-content bg-white/70 px-6">
                         <div class="py-4 space-y-3 text-slate-700 text-sm">
-                            <p><strong>Cellule d'Accompagnement Rentrée Tardive :</strong> Nos tuteurs pédagogiques vous aident à rattraper les cours manqués, accéder aux supports Moodle et contacter les responsables de filière.</p>
+                            <p><strong>→ Conseiller d’Accompagnement pour la Réussite (CARE) :</strong> Vous ne savez pas par où commencer ? Le CARE est votre premier interlocuteur : il vous aide à faire le point et à démarrer sereinement, même en arrivant en cours d'année.</p>
                             <div class="flex flex-wrap gap-2 pt-2">
-                                <a href="mailto:rentree-tardive@univ-cotedazur.fr" class="px-4 py-2 rounded-xl bg-slate-900 text-white font-medium text-xs hover:bg-[#007EA1] transition-colors">
-                                    <i class="fa-regular fa-envelope mr-1"></i> Contactez le tuteur
+                                <a href="https://univ-cotedazur.fr/formation/orientation-et-insertion-professionnelle/se-reorienter/contacts" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-xl bg-slate-900 text-white font-medium text-xs hover:bg-[#007EA1] transition-colors">
+                                    <i class="fa-solid fa-arrow-up-right-from-square mr-1"></i> Je consulte le CARE de mon campus
                                 </a>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Autres accordions inchangés -->
-                <!-- ... -->
+                <!-- Accordion 2 -->
+                <div class="rounded-2xl bg-slate-200/80 border border-slate-300 overflow-hidden transition-all">
+                    <button onclick="toggleAccordion('acc-2')" class="w-full p-5 sm:p-6 text-left flex items-center justify-between font-bold text-slate-900 text-lg hover:text-[#007EA1] transition-colors focus:outline-none">
+                        <span>J’ai une question sur mon inscription administrative</span>
+                        <div id="acc-2-icon" class="w-8 h-8 rounded-full bg-white flex items-center justify-center text-slate-700 font-bold shrink-0 transition-transform">
+                            <i class="fa-solid fa-plus"></i>
+                        </div>
+                    </button>
+                    <div id="acc-2" class="accordion-content bg-white/70 px-6">
+                        <div class="py-4 space-y-3 text-slate-700 text-sm">
+                            <p><strong>→ Scolarité de votre campus :</strong> Certificat de scolarité, frais d'inscription, carte étudiante : la scolarité gère votre dossier et répond à vos questions administratives.</p>
+                            <div class="flex flex-wrap gap-2 pt-2">
+                                <a href="https://univ-cotedazur.fr/formation/scolarite/contacts-des-scolarites" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-xl bg-slate-900 text-white font-medium text-xs hover:bg-[#007EA1] transition-colors">
+                                    <i class="fa-solid fa-arrow-up-right-from-square mr-1"></i> Je consulte la scolarité de mon campus
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Accordion 3 -->
+                <div class="rounded-2xl bg-slate-200/80 border border-slate-300 overflow-hidden transition-all">
+                    <button onclick="toggleAccordion('acc-3')" class="w-full p-5 sm:p-6 text-left flex items-center justify-between font-bold text-slate-900 text-lg hover:text-[#007EA1] transition-colors focus:outline-none">
+                        <span>Je suis étudiant(e) international(e) (visa, titre de séjour, papiers)</span>
+                        <div id="acc-3-icon" class="w-8 h-8 rounded-full bg-white flex items-center justify-center text-slate-700 font-bold shrink-0 transition-transform">
+                            <i class="fa-solid fa-plus"></i>
+                        </div>
+                    </button>
+                    <div id="acc-3" class="accordion-content bg-white/70 px-6">
+                        <div class="py-4 space-y-3 text-slate-700 text-sm">
+                            <p><strong>→ International Incoming Support :</strong> Titre de séjour, attestations, ouverture de compte, aides spécifiques : le guichet international centralise les démarches des étudiant(es) venu(es) de l'étranger (permanence et informations disponibles sur le site de la Maison de l’étudiant).</p>
+                            <div class="flex flex-wrap gap-2 pt-2">
+                                <a href="mailto:welcome@univ-cotedazur.fr" class="px-4 py-2 rounded-xl bg-slate-900 text-white font-medium text-xs hover:bg-[#007EA1] transition-colors">
+                                    <i class="fa-regular fa-envelope mr-1"></i> Écrire un e-mail
+                                </a>
+                                <a href="https://univ-cotedazur.fr/international/venir-a-universite-cote-d-azur/venir-en-tant-quetudiant" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-800 font-medium text-xs hover:bg-slate-200 transition-colors">
+                                    Voir le site International
+                                </a>
+                                <a href="https://issuu.com/univ-cotedazur/docs/welcome_guide_universit_c_te_d_azur" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-800 font-medium text-xs hover:bg-slate-200 transition-colors">
+                                    Welcome Guide
+                                </a>
+                                <a href="https://www.instagram.com/international_unica/" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-800 font-medium text-xs hover:bg-slate-200 transition-colors">
+                                    Instagram International UCA
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Accordion 4 -->
+                <div class="rounded-2xl bg-slate-200/80 border border-slate-300 overflow-hidden transition-all">
+                    <button onclick="toggleAccordion('acc-4')" class="w-full p-5 sm:p-6 text-left flex items-center justify-between font-bold text-slate-900 text-lg hover:text-[#007EA1] transition-colors focus:outline-none">
+                        <span>Je n’ai pas accès à mes outils numériques (identifiants, intranet, moodle, email...)</span>
+                        <div id="acc-4-icon" class="w-8 h-8 rounded-full bg-white flex items-center justify-center text-slate-700 font-bold shrink-0 transition-transform">
+                            <i class="fa-solid fa-plus"></i>
+                        </div>
+                    </button>
+                    <div id="acc-4" class="accordion-content bg-white/70 px-6">
+                        <div class="py-4 space-y-3 text-slate-700 text-sm">
+                            <p><strong>→ Service informatique</strong></p>
+                            <p><strong>Français :</strong> En cas de problème de connexion ou de perte d'identifiants, contactez le support informatique de l'université pour réinitialiser vos accès à l'intranet, Moodle et votre messagerie.</p>
+                            <p><a href="https://assistance.univ-cotedazur.fr" target="_blank" rel="noopener noreferrer" class="text-[#007EA1] font-semibold underline">Contact assistance informatique : assistance.univ-cotedazur.fr</a></p>
+                            <hr class="border-slate-200 my-2">
+                            <p><strong>English :</strong> If you cannot access your digital accounts (Moodle, email, intranet), please contact the university IT support desk for assistance with your credentials.</p>
+                            <p><a href="https://assistance.univ-cotedazur.fr" target="_blank" rel="noopener noreferrer" class="text-[#007EA1] font-semibold underline">IT Support : assistance.univ-cotedazur.fr</a></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Accordion 5 -->
+                <div class="rounded-2xl bg-slate-200/80 border border-slate-300 overflow-hidden transition-all">
+                    <button onclick="toggleAccordion('acc-5')" class="w-full p-5 sm:p-6 text-left flex items-center justify-between font-bold text-slate-900 text-lg hover:text-[#007EA1] transition-colors focus:outline-none">
+                        <span>Je n’ai pas trouvé de logement / J’ai des difficultés financières</span>
+                        <div id="acc-5-icon" class="w-8 h-8 rounded-full bg-white flex items-center justify-center text-slate-700 font-bold shrink-0 transition-transform">
+                            <i class="fa-solid fa-plus"></i>
+                        </div>
+                    </button>
+                    <div id="acc-5" class="accordion-content bg-white/70 px-6">
+                        <div class="py-4 space-y-3 text-slate-700 text-sm">
+                            <p><strong>→ Service social :</strong> Logement, budget, aides d'urgence : l'assistant(e) social(e) vous écoute et vous oriente vers les solutions adaptées à votre situation, en toute confidentialité.</p>
+                            <div class="flex flex-wrap gap-2 pt-2">
+                                <a href="https://univ-cotedazur.fr/vie-des-campus/vie-pratique/aide-sociale-2" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-xl bg-slate-900 text-white font-medium text-xs hover:bg-[#007EA1] transition-colors">
+                                    Je contacte le service social
+                                </a>
+                                <a href="https://univ-cotedazur.fr/international/venir-a-universite-cote-d-azur/venir-en-tant-quetudiant/se-loger" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-800 font-medium text-xs hover:bg-slate-200 transition-colors">
+                                    Rechercher un logement
+                                </a>
+                                <a href="https://www.crous-nice.fr" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-800 font-medium text-xs hover:bg-slate-200 transition-colors">
+                                    Crous Nice-Toulon
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Accordion 6 -->
+                <div class="rounded-2xl bg-slate-200/80 border border-slate-300 overflow-hidden transition-all">
+                    <button onclick="toggleAccordion('acc-6')" class="w-full p-5 sm:p-6 text-left flex items-center justify-between font-bold text-slate-900 text-lg hover:text-[#007EA1] transition-colors focus:outline-none">
+                        <span>Je ne me sens pas bien, j’ai besoin de parler</span>
+                        <div id="acc-6-icon" class="w-8 h-8 rounded-full bg-white flex items-center justify-center text-slate-700 font-bold shrink-0 transition-transform">
+                            <i class="fa-solid fa-plus"></i>
+                        </div>
+                    </button>
+                    <div id="acc-6" class="accordion-content bg-white/70 px-6">
+                        <div class="py-4 space-y-3 text-slate-700 text-sm">
+                            <p><strong>→ Service de santé et soutien psychologique :</strong> Coup de stress, moral en baisse, envie d'en parler : vous pouvez être écouté(e) et accompagné(e), gratuitement et en toute confidentialité.</p>
+                            <div class="flex flex-wrap gap-2 pt-2">
+                                <a href="https://univ-cotedazur.fr/vie-des-campus/vie-pratique/sante-2" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-xl bg-slate-900 text-white font-medium text-xs hover:bg-[#007EA1] transition-colors">
+                                    Soutien psychologique et santé
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Accordion 7 -->
+                <div class="rounded-2xl bg-slate-200/80 border border-slate-300 overflow-hidden transition-all">
+                    <button onclick="toggleAccordion('acc-7')" class="w-full p-5 sm:p-6 text-left flex items-center justify-between font-bold text-slate-900 text-lg hover:text-[#007EA1] transition-colors focus:outline-none">
+                        <span>Je veux être mis(e) en relation avec d’autres étudiants</span>
+                        <div id="acc-7-icon" class="w-8 h-8 rounded-full bg-white flex items-center justify-center text-slate-700 font-bold shrink-0 transition-transform">
+                            <i class="fa-solid fa-plus"></i>
+                        </div>
+                    </button>
+                    <div id="acc-7" class="accordion-content bg-white/70 px-6">
+                        <div class="py-4 space-y-3 text-slate-700 text-sm">
+                            <p><strong>→ Groupes étudiants – BDE, associations et ESN :</strong> Rencontrer du monde, sortir, s'entraider : rejoignez les communautés étudiantes de votre campus pour ne pas rester isolé(e).</p>
+                            <div class="flex flex-wrap gap-2 pt-2">
+                                <a href="https://elmi.univ-cotedazur.fr/a-propos-de-leur/communaute/assocations-etudiantes" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-xl bg-slate-900 text-white font-medium text-xs hover:bg-[#007EA1] transition-colors">
+                                    Associations étudiantes UCA
+                                </a>
+                                <a href="https://www.instagram.com/esnnice/" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-800 font-medium text-xs hover:bg-slate-200 transition-colors">
+                                    ESN Nice (Instagram)
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Accordion 8 -->
+                <div class="rounded-2xl bg-slate-200/80 border border-slate-300 overflow-hidden transition-all">
+                    <button onclick="toggleAccordion('acc-8')" class="w-full p-5 sm:p-6 text-left flex items-center justify-between font-bold text-slate-900 text-lg hover:text-[#007EA1] transition-colors focus:outline-none">
+                        <span>Je suis étudiant international et je veux améliorer mon niveau de français</span>
+                        <div id="acc-8-icon" class="w-8 h-8 rounded-full bg-white flex items-center justify-center text-slate-700 font-bold shrink-0 transition-transform">
+                            <i class="fa-solid fa-plus"></i>
+                        </div>
+                    </button>
+                    <div id="acc-8" class="accordion-content bg-white/70 px-6">
+                        <div class="py-4 space-y-3 text-slate-700 text-sm">
+                            <p><strong>→ Centre de Ressources en Langues et partenaires :</strong> Pour progresser à l'écrit comme à l'oral, l'Université et ses partenaires proposent des cours adaptés à votre niveau.</p>
+                            <div class="flex flex-wrap gap-2 pt-2">
+                                <a href="https://univ-cotedazur.fr/formation/reussir-ses-etudes/scl/crl" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-xl bg-slate-900 text-white font-medium text-xs hover:bg-[#007EA1] transition-colors">
+                                    Centre de Ressources en Langues (CRL)
+                                </a>
+                                <span class="px-4 py-2 rounded-xl bg-slate-100 text-slate-800 font-medium text-xs">Cours Ulysseus</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Accordion 9 -->
+                <div class="rounded-2xl bg-slate-200/80 border border-slate-300 overflow-hidden transition-all">
+                    <button onclick="toggleAccordion('acc-9')" class="w-full p-5 sm:p-6 text-left flex items-center justify-between font-bold text-slate-900 text-lg hover:text-[#007EA1] transition-colors focus:outline-none">
+                        <span>J’ai loupé quelques cours et j’ai besoin de soutien pédagogique</span>
+                        <div id="acc-9-icon" class="w-8 h-8 rounded-full bg-white flex items-center justify-center text-slate-700 font-bold shrink-0 transition-transform">
+                            <i class="fa-solid fa-plus"></i>
+                        </div>
+                    </button>
+                    <div id="acc-9" class="accordion-content bg-white/70 px-6">
+                        <div class="py-4 space-y-3 text-slate-700 text-sm">
+                            <p><strong>→ Tutorat :</strong> Des étudiants plus avancés vous aident à rattraper et à reprendre pied dans vos cours, gratuitement.</p>
+                            <div class="flex flex-wrap gap-2 pt-2">
+                                <a href="https://univ-cotedazur.fr/tutorat" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-xl bg-slate-900 text-white font-medium text-xs hover:bg-[#007EA1] transition-colors">
+                                    Découvrir le tutorat
+                                </a>
+                                <a href="https://univ-cotedazur.fr/vie-des-campus/vie-associative" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-800 font-medium text-xs hover:bg-slate-200 transition-colors">
+                                    S'engager ou se faire aider par un autre étudiant
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional practical info block -->
+            <div class="max-w-4xl p-6 sm:p-8 rounded-3xl bg-slate-100 border border-slate-200 space-y-3">
+                <h3 class="text-xl font-bold text-slate-900">Pour en savoir plus sur la vie pratique</h3>
+                <p class="text-slate-600 text-sm leading-relaxed">
+                    Retrouvez l'ensemble des informations utiles auprès du Crous et de la ville :
+                </p>
+                <ul class="list-disc list-inside text-sm text-slate-700 space-y-1">
+                    <li>Site de la Maison de l’Étudiant (Ville de Nice)</li>
+                    <li>Services de restauration et résidences du Crous</li>
+                </ul>
             </div>
         </section>
     </main>
